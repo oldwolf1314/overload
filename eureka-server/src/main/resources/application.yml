@@ -1,0 +1,59 @@
+#服务端口
+server:
+    port: 8761
+
+spring:
+    application:
+        name: registry-server
+    security:
+        user:
+            name: admin
+            password: 123456
+    rabbitmq:
+        addresses: 192.168.85.179
+        port: 15672
+        username: admin
+        password: 123456
+        virtual-host: /
+    zipkin:
+        sender:
+            type: rabbit
+    sleuth:
+        sampler:
+            probability: 1.0
+eureka:
+    instance:
+        hostname: localhost
+        prefer-ip-address: true
+        lease-expiration-duration-in-seconds: 60 #租期到期时间，默认90秒
+        lease-renewal-interval-in-seconds: 30 #租赁更新时间间隔，默认30，即30秒发送一次心跳
+    server:
+        #关闭自我保护
+        enable-self-preservation: false
+        #清理服务器,单位：毫秒
+        eviction-interval-timer-in-ms: 5000
+    client:
+        #开启健康检查(需要spring-boot-starter-actuator依赖)
+        healthcheck:
+            enabled: true
+        # 单点注册中心的时候，将这两个配置项设为false，分布式注册中心true
+        #表示是否从Eureka Server获取注册信息
+        fetchRegistry: false
+        #表示是否将自己注册到Eureka Server
+        registerWithEureka: false
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+        serviceUrl:
+            defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:8761/eureka/
+
+# 服务管理配置
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"        #暴漏的接口，"*"表示所有web监控接口
+                exclude:            #不暴漏的接口
+            base-path: /actuator  #监控根路径
+    endpoint:
+        health:
+            show-details: ALWAYS
+

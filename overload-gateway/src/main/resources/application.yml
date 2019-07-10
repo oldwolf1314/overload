@@ -1,0 +1,53 @@
+server:
+  port: 8763
+
+spring:
+  application:
+    name: overload-gateway
+  security:
+    user:
+      name: admin
+      password: 123456
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability: 1.0
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    #健康检查的地址（依赖spring-boot-starter-actuator）
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    hostname: localhost
+  metadata-map:
+    user.name: ${spring.security.user.name}
+    user.password: ${spring.security.user.password}
+
+# 服务管理配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"        #暴漏的接口，"*"表示所有web监控接口
+        exclude:            #不暴漏的接口
+  endpoint:
+    health:
+      show-details: ALWAYS
+feign:
+  hystrix:
+    enabled: true    # 开启Hystrix熔断功能
+
+zuul:
+  routes:
+    hiapi:
+      path: /data/**
+      serviceId: overload-gateway

@@ -1,0 +1,127 @@
+##单机版本，不接数据库
+#server:
+#  port: 8762
+#spring:
+#  application:
+#    name: admin-server
+#  security:
+#    user:
+#      name: admin
+#      password: 123456
+#
+#eureka:
+#  instance:
+#    leaseRenewalIntervalInSeconds: 10
+#    health-check-url-path: /actuator/health
+#    prefer-ip-address: true
+#    metadata-map:
+#      user.name: ${spring.security.user.name}
+#      user.password: ${spring.security.user.password}
+#  client:
+#    registryFetchIntervalSeconds: 5
+#    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+#    serviceUrl:
+#      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:8761/eureka/
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: ALWAYS
+##############################################################
+# 服务端口
+server:
+  port: 8762
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: admin
+      password: 123456
+#  redis:
+#    host: 192.168.85.179
+#    port: 6379
+#    password: 123456
+  #rabbitmq配置
+#  rabbitmq:
+#    addresses: 192.168.85.179
+#    username: admin
+#    password: 123456
+#    virtual-host: /
+#    port: 15672
+  boot:
+    admin:
+      ui:
+        title: "Spring Boot Admin"
+      monitor:
+        #监控超时时间
+        connect-timeout: 30000
+        default-retries: 2
+        read-timeout: 2000
+#      probed-endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+#      # turbine监控配置
+#      #    clusters是指监控的集群
+#      #    location是turbine服务的ID，
+#      turbine:
+#        location: http://127.0.0.1:9412/
+#        clusters: default
+      context-path: /admin
+
+turbine:
+  aggregator:
+#    需要监控的服务集群名
+    cluster-config: default
+#    需要监控的服务名
+  app-config: feign-invoker
+  cluster-name-expression: new String("default")
+  instanceUrlSuffix:
+#    key是clusterConfig集群的名字，value是hystrix监控的后缀，springboot2.0为actuator/hystrix.stream
+      default: actuator/hystrix.stream
+#  可以让同一主机上的服务通过主机名与端口号的组合来进行区分
+  combine-host-port: true
+
+#注册中心
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    #健康检查的地址（依赖spring-boot-starter-actuator）
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    hostname: localhost
+  metadata-map:
+    user.name: ${spring.security.user.name}
+    user.password: ${spring.security.user.password}
+
+
+# actuator服务管理配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+    shutdown:
+      enabled: false
+
+
+# info接口返回值
+#info:
+#  app:
+#    name: ${spring.application.name}
+#    version: 1.0.0
+#  java:
+#    version: ${java.version}
+

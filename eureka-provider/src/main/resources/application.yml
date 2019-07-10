@@ -1,0 +1,59 @@
+#服务端口
+server:
+    port: 9100
+
+spring:
+    application:
+        name: eureka-provider
+    security:
+        user:
+            name: admin
+            password: 123456
+    rabbitmq:
+        addresses: 192.168.85.179
+        port: 5672
+        username: admin
+        password: 123456
+        virtual-host: /
+    zipkin:
+        sender:
+            type: rabbit
+    sleuth:
+        sampler:
+            probability: 1.0
+
+#        base-url: http://localhost:9412
+#    sleuth:
+#        web:
+#            client:
+#                enabled: true
+
+#注册中心
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:8761/eureka/
+    instance:
+        leaseRenewalIntervalInSeconds: 10
+        #健康检查的地址（依赖spring-boot-starter-actuator）
+        health-check-url-path: /actuator/health
+        prefer-ip-address: true
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+        hostname: localhost
+    metadata-map:
+        user.name: ${spring.security.user.name}
+        user.password: ${spring.security.user.password}
+
+# actuator服务管理配置
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        health:
+            show-details: ALWAYS
+
+

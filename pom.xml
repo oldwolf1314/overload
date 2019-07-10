@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jsti</groupId>
+    <artifactId>overload</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <!-- 使用UTF-8编码  -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 使用jdk1.8版本  -->
+        <java.version>1.8</java.version>
+        <spring.boot.version>2.0.6.RELEASE</spring.boot.version>
+        <spring.cloud.version>Finchley.SR2</spring.cloud.version>
+        <spring-boot-admin.version>2.0.6</spring-boot-admin.version>
+    </properties>
+
+    <modules>
+        <module>eureka-provider</module>
+        <module>eureka-server</module>
+        <module>overload-zipkin</module>
+        <module>overload-admin</module>
+        <module>overload-gateway</module>
+    </modules>
+
+    <!--<parent>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--<version>2.0.6.RELEASE</version>-->
+        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--</parent>-->
+    <!--<properties>-->
+        <!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+        <!--<cas.version>6.0.0</cas.version>-->
+        <!--<spring.boot.version>2.0.6.RELEASE</spring.boot.version>-->
+        <!--<shiro.version>1.4.0</shiro.version>-->
+        <!--<jbone.version>1.0.0</jbone.version>-->
+        <!--<jackson.version>2.9.7</jackson.version>-->
+        <!--<commons-io.version>2.5</commons-io.version>-->
+        <!--<commons-text.version>1.1</commons-text.version>-->
+        <!--<commons-pool2.version>2.4.2</commons-pool2.version>-->
+        <!--<commons-cli.version>1.4</commons-cli.version>-->
+        <!--<commons-beanutils.version>1.9.3</commons-beanutils.version>-->
+        <!--<commons-logging.version>1.2</commons-logging.version>-->
+        <!--<commons-configuration2.version>2.2</commons-configuration2.version>-->
+        <!--<commons-validator.version>1.6</commons-validator.version>-->
+        <!--<commons-codec.version>1.10</commons-codec.version>-->
+        <!--<commons-jexl.version>1.1</commons-jexl.version>-->
+        <!--<commons-lang3.version>3.6</commons-lang3.version>-->
+        <!--<log4j.version>2.7</log4j.version>-->
+        <!--<slf4j.version>1.7.25</slf4j.version>-->
+        <!--<druid.version>1.1.6</druid.version>-->
+        <!--<lombok.version>1.18.6</lombok.version>-->
+        <!--<fastjson.version>1.2.46</fastjson.version>-->
+
+        <!--<maven.compiler.source>11</maven.compiler.source>-->
+        <!--<maven.compiler.target>11</maven.compiler.target>-->
+    <!--</properties>-->
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <version>${spring.boot.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!--<version>3.7.0</version>-->
+            </plugin>
+        </plugins>
+    </build>
+</project>

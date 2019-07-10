@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Eureka-Provider" />
+        <module name="eureka-provider" />
+        <module name="eureka-server" />
+        <module name="overload-admin" />
+        <module name="overload-gateway" />
+        <module name="overload-zipkin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bigdataservice" target="1.5" />
+      <module name="cleandata" target="1.8" />
+      <module name="cloud-feign" target="1.8" />
+      <module name="Eureka-Server" target="1.8" />
+      <module name="overload-zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Eureka-Provider" options="" />
+      <module name="Eureka-Server" options="-parameters" />
+      <module name="cleandata" options="-parameters" />
+      <module name="cloud-feign" options="" />
+      <module name="eureka-server" options="" />
+      <module name="overload-admin" options="" />
+      <module name="overload-gateway" options="" />
+      <module name="overload-zipkin" options="" />
+      <module name="overload-zuul" options="" />
+    </option>
+  </component>
+</project>
